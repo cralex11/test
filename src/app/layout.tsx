@@ -23,13 +23,14 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body
-            className={`${roboto.className} antialiased  bg-[#F9FAFC]`}
+            className={`${roboto.className} overflow-y-hidden antialiased flex flex-col  bg-[#F9FAFC]`}
         >
         <MainNavigation/>
-
-        <section className={"max-w-[1367px] px-[86px] mx-auto py-[30px]"}>
-            {children}
-        </section>
+        <div className={"max-h-[calc(100vh-52px)] overflow-y-auto"}>
+            <section className={"max-w-[1367px] h-full px-[86px] mx-auto py-[30px]"}>
+                {children}
+            </section>
+        </div>
         </body>
         </html>
     );

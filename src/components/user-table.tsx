@@ -31,9 +31,9 @@ export const columns: ColumnDef<User>[] = [
             const src = user?.pic;
 
             return (
-                <div className={"flex gap-2.5 "} key={cell.id}>
+                <div className={"flex gap-2.5 items-center"} key={cell.id}>
                     <ImageWithPlaceholder src={src}
-                                          className={"w-[20px] bg-white rounded-full border border-[#E8E9FF] h-[20px]"}/>
+                                          className={"w-[40px] bg-white rounded-full border border-[#E8E9FF] h-[40px]"}/>
                     <p>{user.name}</p>
                 </div>)
         }
