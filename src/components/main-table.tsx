@@ -33,10 +33,9 @@ import appsInventoryMock from "../mocks/apss_inventory.mock.json"
 import {TableDrawer} from "@/components/table-drawer";
 import Image from "next/image";
 
+import arrowsSvg from "../assets/arrows.svg"
+import {ImageWithPlaceholder} from "@/components/image-with-placeholder";
 
-// "id": "1",
-//       "name": "John Snow",
-//       "pic":
 export interface User {
     id: string
     name: string
@@ -56,12 +55,6 @@ export interface InventoryAppType {
     logos: Logos
 }
 
-// "lastClassification": "Mon Dec 16 2024 11:00:28 GMT+0200 (Israel Standard Time)",
-//   "logo": "https://w7.pngwing.com/pngs/1023/88/png-transparent-zoom-social-media-meeting-logo-apps-social-media-icon-thumbnail.png",
-//   "connector": {
-//     "name": "Reco",
-//     "logo": "https://cdn.prod.website-files.com/644fc991ce69ff0d3bdbeb63/654b815aaae657a2646a635e_logo_reco.svg"
-//   },
 export interface InventoryAppDetailsType extends Omit<InventoryAppType, "logos" | "connector"> {
     lastClassification: string
     logo: string
@@ -81,8 +74,9 @@ const HeaderWithSort = ({onClick, title}: {
     onClick: () => void,
     title: string
 }) => (<button
+    className={"flex gap-2.5 text-[#222425]"}
     onClick={onClick}
->{title}</button>)
+>{title} <Image src={arrowsSvg} alt={"arrows"}/></button>)
 export const columns: ColumnDef<InventoryAppType>[] = [
     {
         accessorKey: "logos",
@@ -93,9 +87,7 @@ export const columns: ColumnDef<InventoryAppType>[] = [
         cell: ({cell}) => {
             const src = cell.getValue<Logos>().app;
 
-            if (!src) return <div>placeholder</div>
-
-            return (<img key={cell.id} width={40} height={40} src={src} alt={"app logo"}/>)
+            return (<ImageWithPlaceholder key={cell.id} src={src} className={"size-[40px] bg-white rounded-full border border-[#E8E9FF]"}/>)
         }
     },
     {
@@ -150,12 +142,9 @@ export function DataTableDemo() {
 
     return (
         <div className="w-full">
-            <div className="flex items-center py-4">
+            <TableDrawer onClose={onClose} selectedAppId={selectedAppId}/>
 
-                <TableDrawer onClose={onClose} selectedAppId={selectedAppId}/>
-
-            </div>
-            <div className="rounded-md border">
+            <div className="mt-7">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -208,10 +197,7 @@ export function DataTableDemo() {
                 </Table>
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
-                </div>
+
                 <div className="space-x-2">
                     <button
                         onClick={() => table.previousPage()}
